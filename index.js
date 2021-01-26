@@ -28,16 +28,23 @@ class CountdownTimer {
   pad(value) {
     return String(value).padStart(2, "0");
   }
-  loadingTimer = setInterval(() => {
-    const startTime = Date.now();
-    let diff = this.targetDate - startTime;
-    this.updateClockItems(diff);
-  }, refs.sec);
-}
 
-new CountdownTimer(
+  start() {
+    this.loadingTimer();
+    setInterval(() => {
+      this.loadingTimer();
+    }, 1000);
+  }
+  loadingTimer() {
+    const startTime = Date.now();
+    let time = this.targetDate - startTime;
+    this.updateClockItems(time);
+  }
+}
+const timer = new CountdownTimer(
   ...Object.values({
     selector: "#timer-1",
     targetDate: new Date("Jul 01, 2021"),
   })
 );
+timer.start();
